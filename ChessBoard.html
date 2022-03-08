@@ -1,0 +1,295 @@
+<html>
+
+<head>
+<meta charset="UTF-8"> 
+<title>Chess Game</title>
+
+<style type="text/css">
+
+.chessboard {
+    width: 640px;
+    height: 640px;
+    margin: 20px;
+    border: 25px solid #333;
+}
+
+.black {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #999;
+    font-size:50px;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
+
+.white {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
+    font-size:50px;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
+
+.piece {
+    cursor: pointer;
+}
+
+.rotate {
+    transform: rotateX(180deg);
+}
+
+</style>
+
+</head>
+
+<body>
+    
+<div class="chessboard" style="margin-left: 10cm; margin-top: 2.5cm;">
+
+<!-- 1st -->
+<div class="white">
+    <div class="piece">&#9820;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9822;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9821;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9819;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9818;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9821;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9822;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9820;</div>
+</div>
+
+<!-- 2nd -->
+<div class="black">
+    <div class="piece">&#9823;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9823;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9823;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9823;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9823;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9823;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9823;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9823;</div>
+</div>
+
+<!-- 3th -->
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+
+<!-- 4st -->
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+
+<!-- 5th -->
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+
+<!-- 6th -->
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+
+<!-- 7th -->
+<div class="white">
+    <div class="piece">&#9817;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9817;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9817;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9817;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9817;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9817;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9817;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9817;</div>
+</div>
+
+<!-- 8th -->
+<div class="black">
+    <div class="piece">&#9814;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9816;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9815;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9813;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9812;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9815;</div>
+</div>
+<div class="black">
+    <div class="piece">&#9816;</div>
+</div>
+<div class="white">
+    <div class="piece">&#9814;</div>
+</div>
+</div>
+
+<script>
+var pieces = document.getElementsByClassName("piece");
+var cellsB = document.getElementsByClassName("black");
+var cellsW = document.getElementsByClassName("white");
+
+for (let iCount2 = 0; iCount2 < pieces.length; iCount2++) {
+    pieces[iCount2].addEventListener('mousedown', userDown);
+}
+
+var counter = 0;
+
+function userDown(event) {
+    counter++;
+    let element = event.target;
+    
+    element.style.position = "absolute";
+    element.id = "piece" + counter;
+
+    element.style.top = event.clientY;
+    element.style.left = event.clientX;
+    
+    document.body.appendChild(element);
+
+    document.body.addEventListener('mousemove', userMove);
+
+    for (let iCount = 0; iCount < cellsB.length; iCount++) {
+        cellsB[iCount].addEventListener('mouseup', userUp);
+        cellsW[iCount].addEventListener('mouseup', userUp);
+    }
+
+}
+
+function userMove(event) {
+    event.preventDefault();
+
+    let x = event.clientX;
+    let y = event.clientY;
+
+    let piece = document.getElementById('piece'+counter)
+
+    piece.style.fontSize = "50px";
+    piece.style.top = (y + 10) + "px";
+    piece.style.left = (x + 10) + "px";
+
+    if (counter%2 == 0) {
+        piece.classList.remove("rotate");
+    }
+
+}
+
+function userUp(event) {
+    
+    let target = event.target;
+    let piece = document.getElementById('piece'+counter);
+
+    document.body.removeEventListener('mousemove', userMove);
+
+    for (let iCount = 0; iCount < cellsB.length; iCount++) {
+        cellsB[iCount].removeEventListener('mouseup', userUp);
+        cellsW[iCount].removeEventListener('mouseup', userUp);
+    }
+
+    if (target.firstChild == null) {
+        piece.style.position = "static";
+        target.appendChild(piece);
+        rotateBoard();
+
+    }
+
+    else {
+        target.firstChild.remove();
+        piece.style.position = "static";
+        target.appendChild(piece);
+        rotateBoard();
+    }
+}
+
+function rotateBoard() {
+    var chessboard = document.getElementsByClassName("chessboard");
+
+    if (counter%2 != 0) {
+        for (let i = 0; i < pieces.length; i++) {
+            pieces[i].classList.add("rotate");
+        }
+        chessboard[0].classList.add("rotate");
+    }
+
+    else {
+        for (let i = 0; i < pieces.length; i++) {
+            pieces[i].classList.remove("rotate");
+        }
+        chessboard[0].classList.remove("rotate");
+    }
+}
+</script>
+</body>
+</html>
